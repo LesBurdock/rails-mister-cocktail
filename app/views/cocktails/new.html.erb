@@ -1,0 +1,8 @@
+<div class = 'form'>
+  <%= simple_form_for(@cocktail) do |f| %>
+    <%= f.input :name %>
+    <%= f.input :pic_url %>
+    <%= f.submit "add this cocktail", class: "btn btn-default" %>
+  <% end %>
+</div>
+

@@ -1,0 +1,19 @@
+
+<div class= "bubble">
+  <div class= "create">
+      <h2><%= link_to 'Create Cocktail', new_cocktail_path %></h2>
+  </div>
+</div>
+<div id='cards' class='background'>
+   <% @cocktails.each do |cocktail| %>
+  <div class="card-whole">
+    <div class="image">
+     <img src= <%= cocktail.pic_url%> />
+    </div>
+      <div class="card-infos">
+          <h2><%= link_to cocktail.name, cocktail_path(cocktail)%></h2>
+      </div>
+  </div>
+  <% end %>
+</div>
+
