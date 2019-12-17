@@ -20,6 +20,13 @@ class CocktailsController < ApplicationController
 
   def index
     @cocktails = Cocktail.all
+     @search = params["search"]
+    if @search.present?
+      @name = @search[:query]
+      @cocktails = Cocktail.where(["name = ?", @name])
+    else
+      render :index
+    end
   end
 
   def update
@@ -37,17 +44,17 @@ class CocktailsController < ApplicationController
     @cocktail.destroy
   end
 
-  def search
-    @search = params["search"]
-    if @search.present?
-      @name = @search["name"]
-      @cocktail = Cocktail.where(["name = ?", @name])
-      # cannot do this as its not params if i redirect there it looks for the params id and gets and object.
-      redirect_to cocktail_path(@cocktail)
-    else
-      render :index
-    end
-  end
+  # def search
+  #   @search = params["search"]
+  #   if @search.present?
+  #     @name = @search["query"]
+  #     @cocktails = Cocktail.where(["name = ?", @name])
+  #     # cannot do this as its not params if i redirect there it looks for the params id and gets and object.
+  #     redirect_to cocktail_path(@cocktail)
+  #   else
+  #     render :index
+  #   end
+  # end
 
   private
   def cocktails_params

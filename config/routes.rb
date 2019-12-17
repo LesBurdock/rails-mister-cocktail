@@ -5,5 +5,5 @@ Rails.application.routes.draw do
     resources :doses, only: [:index, :new, :create, :destroy]
   end
 
-  get "/search", to: "cocktails#search"
+  # get "/search", to: "cocktails#search"
 end
