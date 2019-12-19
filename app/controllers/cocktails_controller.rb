@@ -2,6 +2,7 @@ class CocktailsController < ApplicationController
 
   def show
     @cocktail = Cocktail.find(params[:id])
+    @review = Review.new
   end
 
   def create
@@ -23,11 +24,15 @@ class CocktailsController < ApplicationController
      @search = params["search"]
     if @search.present?
       @name = @search[:query]
-      @cocktails = Cocktail.where(["name = ?", @name])
+      # @cocktails = Cocktail.where(["name = ?", @name])
+      # select cock from cocktail where cocktails.doses.ingredients.name = @name
+      @cocktails = Cocktail.joins("INNER JOIN doses ON doses.cocktail_id = cocktails.id  INNER JOIN ingredients ON ingredients.id = doses.ingredient_id")
+                           .where("ingredients.name like ?", @name)
     else
       render :index
     end
   end
+
 
   def update
     @cocktail = Cocktail.find(params[:id])
@@ -44,20 +49,10 @@ class CocktailsController < ApplicationController
     @cocktail.destroy
   end
 
-  # def search
-  #   @search = params["search"]
-  #   if @search.present?
-  #     @name = @search["query"]
-  #     @cocktails = Cocktail.where(["name = ?", @name])
-  #     # cannot do this as its not params if i redirect there it looks for the params id and gets and object.
-  #     redirect_to cocktail_path(@cocktail)
-  #   else
-  #     render :index
-  #   end
-  # end
-
   private
+
   def cocktails_params
     params.require(:cocktail).permit(:name, :pic_url, :search)
   end
+
 end

@@ -1,10 +1,12 @@
 <div class= "show_grid">
+
   <div class= image_card >
    <img src= <%= @cocktail.pic_url%> class = image/>
     <%= link_to cocktails_path  do %>
       <i class="fas fa-chevron-circle-left" id="back_icon"></i>
     <%end%>
-    </div>
+  </div>
+
     <div class = "text_info">
       <h2><%= @cocktail.name %></h2>
         <ul>
@@ -15,12 +17,22 @@
           <%= link_to new_cocktail_dose_path(@cocktail) do %>
             <i class="fas fa-plus-circle" id="plus_icon"></i>
           <%end%>
-        </div>
-  </div>
-</div>
-  <div class="dots">
-        <%= image_tag("overlay.png")%>
     </div>
 
-
+    <div class= "reviews">
+      <h4>Reviews</h4>
+        <ul>
+          <% @cocktail.reviews.each do |review| %>
+            <li><%= review.rating.times do  %>
+                <span class="fa fa-star checked"></span>
+            <% end %>
+          <%= review.comment %>
+          <%end%></li>
+        </ul>
+    </div>
+     <%= render "reviews/new", cocktail: @cocktail, review: @review %>
+  </div>
+  <!-- need to have an average rating to display stars -->
+ </div>
+</div>
 
