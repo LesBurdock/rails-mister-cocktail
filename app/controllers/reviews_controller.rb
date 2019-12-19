@@ -9,7 +9,7 @@ class ReviewsController < ApplicationController
     @review = Review.new(review_params)
     @review.cocktail = @cocktail
     @review.save
-    redirect_to cocktails_path(@cocktail)
+    redirect_to root_path(@cocktail)
   end
 
   def stars
